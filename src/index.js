@@ -1,12 +1,40 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import {createStore, applyMiddleware, compose, combineReducers} from 'redux';
+import {Provider} from 'react-redux';
+import thunkMiddleware from 'redux-thunk';
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import App from './App';
+import musicReducer from './store/reducers/reducer-music';
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
+import {createBrowserHistory} from "history";
+import {connectRouter, routerMiddleware, ConnectedRouter} from 'connected-react-router';
+
+const history = createBrowserHistory();
+
+const middleware = [
+	thunkMiddleware,
+	routerMiddleware(history)
+];
+
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const rootReducer = combineReducers({
+	music: musicReducer,
+	router: connectRouter(history)
+});
+
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(...middleware)));
+
+const app = (
+	<Provider store={store}>
+		<ConnectedRouter history={history}>
+			<App/>
+		</ConnectedRouter>
+	</Provider>
+);
+
+ReactDOM.render(app, document.getElementById('root'));
 serviceWorker.unregister();
