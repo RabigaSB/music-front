@@ -11,7 +11,12 @@ class Albums extends Component {
 		artist: ''
 	};
 	componentDidMount() {
-		this.props.onFetchAlbums(this.props.match.params.artistId).then(data => this.setState({artist: data.albums[0].artist.name}));
+		this.props.onFetchAlbums(this.props.match.params.artistId)
+			.then(data => {
+				if(data.albums.length>0) {
+					this.setState({artist: data.albums[0].artist.name})
+				}
+			});
 
 	}
 

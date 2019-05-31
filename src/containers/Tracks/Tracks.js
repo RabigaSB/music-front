@@ -3,13 +3,17 @@ import {connect} from "react-redux";
 import {fetchTracks} from "../../store/actions/action-music";
 
 
-class Albums extends Component {
+class Tracks extends Component {
 	state ={
 		album: ''
 	};
 	componentDidMount() {
 		this.props.onFetchTracks(this.props.match.params.albumId)
-			.then(data => this.setState({album: data.tracks[0].album.name}));
+			.then(data => {
+				if(data.tracks.length>0) {
+					this.setState({album: data.tracks[0].album.name})
+				}
+			});
 	}
 
 	render() {
@@ -46,5 +50,5 @@ const mapDispatchToProps = dispatch => {
 	};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Albums);
+export default connect(mapStateToProps, mapDispatchToProps)(Tracks);
 
