@@ -1,5 +1,5 @@
 import axios from '../../axios-api';
-import {REGISTER_USER_FAILURE, REGISTER_USER_SUCCESS,LOGIN_USER_FAILURE,LOGIN_USER_SUCCESS} from "./actionTypes";
+import {REGISTER_USER_FAILURE, REGISTER_USER_SUCCESS,LOGIN_USER_FAILURE,LOGIN_USER_SUCCESS,LOGOUT_USER} from "./actionTypes";
 import {push} from 'connected-react-router';
 
 
@@ -49,5 +49,19 @@ export const loginUser = userData => {
 			}
 		);
 	};
+};
+
+export const logoutUser = () => {
+	return (dispatch, getState) => {
+		const token = getState().users.user.token;
+		const headers = {Authorization: token};
+
+		return axios.delete('/users/session', {headers}).then(
+			response => {
+				dispatch({type: LOGOUT_USER});
+				dispatch(push('/'));
+			}
+		);
+	}
 };
 

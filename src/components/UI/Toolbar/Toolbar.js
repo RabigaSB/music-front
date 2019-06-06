@@ -12,7 +12,7 @@ import {
 	UncontrolledDropdown
 } from 'reactstrap';
 
-const Toolbar = ({user}) => {
+const Toolbar = ({user, logout}) => {
 	return (
 		<Navbar color="dark" dark>
 			<NavbarBrand tag={RouterNavLink} to="/">Artists</NavbarBrand>
@@ -34,7 +34,7 @@ const Toolbar = ({user}) => {
 										View profile
 									</DropdownItem>
 									<DropdownItem divider />
-									<DropdownItem>
+									<DropdownItem onClick={logout}>
 										Logout
 									</DropdownItem>
 								</DropdownMenu>

@@ -8,6 +8,8 @@ import Tracks from "./containers/Tracks/Tracks";
 import Login from './containers/Login/Login';
 import Register from './containers/Register/Register';
 import TrackHistory from './containers/TrackHistory/TrackHistory';
+import {logoutUser} from "./store/actions/action-user";
+
 
 
 
@@ -16,7 +18,7 @@ class App extends Component {
         return (
             <Fragment>
                 <header>
-                    <Toolbar user={this.props.user} />
+                    <Toolbar user={this.props.user} logout={this.props.onLogoutUser} />
                 </header>
                 <main>
                     <div className='container'>
@@ -42,6 +44,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
+    onLogoutUser: () => dispatch(logoutUser())
 });
 
 
