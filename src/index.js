@@ -7,6 +7,8 @@ import * as serviceWorker from './serviceWorker';
 
 import App from './App';
 import musicReducer from './store/reducers/reducer-music';
+import userReducer from './store/reducers/reducer-user';
+
 
 import {createBrowserHistory} from "history";
 import {connectRouter, routerMiddleware, ConnectedRouter} from 'connected-react-router';
@@ -23,6 +25,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
 	music: musicReducer,
+	users: userReducer,
 	router: connectRouter(history)
 });
 
