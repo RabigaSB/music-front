@@ -10,8 +10,10 @@ class Tracks extends Component {
 	componentDidMount() {
 		this.props.onFetchTracks(this.props.match.params.albumId)
 			.then(data => {
-				if(data.tracks.length>0) {
-					this.setState({album: data.tracks[0].album.name})
+				if(data) {
+					if(data.tracks.length>0 ) {
+						this.setState({album: data.tracks[0].album.name})
+					}
 				}
 			});
 	}
