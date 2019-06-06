@@ -71,3 +71,16 @@ export const fetchTrackHistory = () => {
 			.then(response => dispatch(fetchTrackHistorySuccess(response.data)));
 	};
 };
+
+export const createTrackHistory = data => {
+
+	return (dispatch, getState) => {
+		let headers = {};
+		if (getState().users.user) {
+			headers = {
+				Authorization: getState().users.user.token
+			};
+		}
+		return axios.post('/track_history', data, {headers});
+	};
+};

@@ -38,7 +38,6 @@ export const loginUserFailure = error => {
 };
 
 export const loginUser = userData => {
-	console.log(userData);
 	return dispatch => {
 		return axios.post('/users/session', userData).then(
 			response => {

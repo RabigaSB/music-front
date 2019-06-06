@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import {connect} from "react-redux";
-import {fetchTracks} from "../../store/actions/action-music";
+import {fetchTracks, createTrackHistory} from "../../store/actions/action-music";
 
 
 class Tracks extends Component {
@@ -25,7 +25,11 @@ class Tracks extends Component {
 				{
 					this.props.tracks.length>0?
 						this.props.tracks.map(track => (
-								<div key={track._id} className="d-flex mb-3 border rounded p-4 align-items-center justify-content-between">
+								<div key={track._id}
+								     className="d-flex mb-3 border rounded p-4 align-items-center justify-content-between"
+								     onClick={() => this.props.onCreateTracks({trackId: track._id})}
+								     tabIndex={0}
+								>
 									<div className="p-3">{track.trackNumber}</div>
 									<div className="p-3">{track.name}</div>
 									<div className="p-3">{track.length}</div>
@@ -48,7 +52,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		onFetchTracks: albumId => dispatch(fetchTracks(albumId))
+		onFetchTracks: albumId => dispatch(fetchTracks(albumId)),
+		onCreateTracks: data => dispatch(createTrackHistory(data))
 	};
 };
 
