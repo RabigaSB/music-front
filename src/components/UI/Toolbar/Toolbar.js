@@ -21,20 +21,25 @@ const Toolbar = ({user}) => {
 				{
 					user ?
 
-						<UncontrolledDropdown nav inNavbar>
-							<DropdownToggle nav caret>
-								Hello, {user.username}!
-							</DropdownToggle>
-							<DropdownMenu right>
-								<DropdownItem>
-									View profile
-								</DropdownItem>
-								<DropdownItem divider />
-								<DropdownItem>
-									Logout
-								</DropdownItem>
-							</DropdownMenu>
-						</UncontrolledDropdown>
+						<Fragment>
+							<NavItem>
+								<NavLink tag={RouterNavLink} to="/track_history" exact>TrackHistory</NavLink>
+							</NavItem>
+							<UncontrolledDropdown nav inNavbar>
+								<DropdownToggle nav caret>
+									Hello, {user.username}!
+								</DropdownToggle>
+								<DropdownMenu right>
+									<DropdownItem>
+										View profile
+									</DropdownItem>
+									<DropdownItem divider />
+									<DropdownItem>
+										Logout
+									</DropdownItem>
+								</DropdownMenu>
+							</UncontrolledDropdown>
+						</Fragment>
 
 						:
 						<Fragment>
