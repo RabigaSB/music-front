@@ -13,6 +13,26 @@ import userReducer from './store/reducers/reducer-user';
 import {createBrowserHistory} from "history";
 import {connectRouter, routerMiddleware, ConnectedRouter} from 'connected-react-router';
 
+const saveToLocalStorage = state => {
+	try {
+		const serializedState = JSON.stringify(state);
+		localStorage.setItem('state', serializedState);
+	} catch (e) {
+		console.log('Could not save state');
+	}
+};
+const loadFromLocalStorage = () => {
+	try {
+		const serializedState = localStorage.getItem('state');
+		if (serializedState === null) {
+			return;
+		}
+		return JSON.parse(serializedState);
+	} catch {
+		return undefined;
+	}
+};
+
 const history = createBrowserHistory();
 
 const middleware = [
@@ -29,7 +49,17 @@ const rootReducer = combineReducers({
 	router: connectRouter(history)
 });
 
-const store = createStore(rootReducer, composeEnhancers(applyMiddleware(...middleware)));
+const persistedState = loadFromLocalStorage();
+
+const store = createStore(rootReducer, persistedState, composeEnhancers(applyMiddleware(...middleware)));
+
+store.subscribe(() => {
+	saveToLocalStorage({
+		users: {
+			user: store.getState().users.user
+		}
+	});
+});
 
 const app = (
 	<Provider store={store}>
