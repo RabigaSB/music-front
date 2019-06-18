@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react';
 
 import {connect} from "react-redux";
-import {createAlbum, fetchArtists} from "../../store/actions/action-music";
+import { createArtist } from "../../store/actions/action-music";
 import {Button, Form} from 'reactstrap';
 import FormElement from '../../components/UI/Form/FormElement';
 
@@ -10,13 +10,8 @@ class NewAlbum extends Component {
 	state = {
 		name: '',
 		published: false,
-		year: '',
-		artist: '',
+		information: '',
 	};
-
-	componentDidMount() {
-		this.props.onFetchArtists();
-	}
 
 	submitFormHandler = event => {
 		event.preventDefault();
@@ -48,7 +43,7 @@ class NewAlbum extends Component {
 	render() {
 		return (
 			<Fragment>
-				<h2>Add new album</h2>
+				<h2>Add new artist</h2>
 				<Form onSubmit={this.submitFormHandler}>
 					<FormElement
 						title="Name"
@@ -57,16 +52,6 @@ class NewAlbum extends Component {
 						name="name"
 						placeholder="Enter name"
 						value={this.state.name}
-						onChange={this.inputChangeHandler}
-					/>
-					<FormElement
-						title="Year"
-						type="number"
-						required
-						min="0"
-						name="year"
-						placeholder="Enter year"
-						value={this.state.year}
 						onChange={this.inputChangeHandler}
 					/>
 					<FormElement
@@ -86,12 +71,12 @@ class NewAlbum extends Component {
 						onChange={this.fileChangeHandler}
 					/>
 					<FormElement
-						title="Artist"
-						type="select"
+						title="Information"
+						type="text"
 						required
-						name="artist"
-						options={this.props.artists}
-						value={this.state.artist}
+						name="information"
+						placeholder="Enter information"
+						value={this.state.information}
 						onChange={this.inputChangeHandler}
 					/>
 
@@ -104,18 +89,12 @@ class NewAlbum extends Component {
 	}
 }
 
-const mapStateToProps = state => {
-	return {
-		artists: state.music.artists
-	}
-};
 
 const mapDispatchToProps = dispatch => {
 	return {
-		onSubmit: data => dispatch(createAlbum(data)),
-		onFetchArtists: () => dispatch(fetchArtists())
+		onSubmit: data => dispatch(createArtist(data)),
 	};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewAlbum);
+export default connect(null, mapDispatchToProps)(NewAlbum);
 

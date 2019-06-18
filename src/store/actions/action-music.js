@@ -15,9 +15,12 @@ const getAuthHeader = getState => {
 
 const getAdminRoute = getState => {
 	let adminRoute='';
-	if(getState().users.user.role === 'admin') {
-		adminRoute = '/admin';
+	if (getState().users.user) {
+		if(getState().users.user.role === 'admin') {
+			adminRoute = '/admin';
+		}
 	}
+
 	return adminRoute;
 };
 
@@ -43,11 +46,13 @@ const fetchAlbumsSuccess = albums => {
 };
 
 export const fetchAlbums = (artistId) => {
+	let endpoint = '';
+	if(artistId) endpoint = '?artist=' + artistId;
 	return (dispatch, getState) => {
 		
-		const url = '/albums' + getAdminRoute(getState) + '?artist=' + artistId;
+		const url = '/albums' + getAdminRoute(getState) + endpoint;
 		const headers = getAuthHeader(getState);
-		
+
 		return axios.get(url, {headers}).then(
 			response => dispatch(fetchAlbumsSuccess(response.data))
 		)
@@ -139,6 +144,8 @@ export const createAlbum = data => {
 export const createTrack = data => {
 	
 	return (dispatch, getState) => {
+
+		console.log(data);
 		
 		const url = '/tracks' + getAdminRoute(getState);
 		const headers = getAuthHeader(getState);

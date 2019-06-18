@@ -1,32 +1,33 @@
 import React, {Component, Fragment} from 'react';
 
 import {connect} from "react-redux";
-import {createAlbum, fetchArtists} from "../../store/actions/action-music";
+import { createTrack, fetchAlbums} from "../../store/actions/action-music";
 import {Button, Form} from 'reactstrap';
 import FormElement from '../../components/UI/Form/FormElement';
 
 
-class NewAlbum extends Component {
+class NewTrack extends Component {
 	state = {
 		name: '',
 		published: false,
-		year: '',
-		artist: '',
+		trackNumber: '',
+		album: '',
+		length: ''
 	};
 
 	componentDidMount() {
-		this.props.onFetchArtists();
+		this.props.onFetchAlbums();
 	}
 
 	submitFormHandler = event => {
 		event.preventDefault();
 
-		const formData = new FormData();
-
-		for (let key in this.state) {
-			formData.append(key, this.state[key]);
-		}
-		this.props.onSubmit(formData);
+		// const formData = new FormData();
+		//
+		// for (let key in this.state) {
+		// 	formData.append(key, this.state[key]);
+		// }
+		this.props.onSubmit(this.state);
 	};
 
 	inputChangeHandler = event => {
@@ -41,14 +42,10 @@ class NewAlbum extends Component {
 		});
 	};
 
-	fileChangeHandler = e => {
-		this.setState({image: e.target.files[0]})
-	};
-
 	render() {
 		return (
 			<Fragment>
-				<h2>Add new album</h2>
+				<h2>Add new track</h2>
 				<Form onSubmit={this.submitFormHandler}>
 					<FormElement
 						title="Name"
@@ -60,12 +57,12 @@ class NewAlbum extends Component {
 						onChange={this.inputChangeHandler}
 					/>
 					<FormElement
-						title="Year"
+						title="Track number"
 						type="number"
 						required
 						min="0"
-						name="year"
-						placeholder="Enter year"
+						name="trackNumber"
+						placeholder="Enter trackNumber"
 						value={this.state.year}
 						onChange={this.inputChangeHandler}
 					/>
@@ -78,20 +75,21 @@ class NewAlbum extends Component {
 						onChange={this.inputChangeCheckboxHandler}
 					/>
 					<FormElement
-						title="Image"
-						type="file"
-						name="image"
-						placeholder="Enter image"
-						value={this.state.image}
-						onChange={this.fileChangeHandler}
+						title="Length"
+						type="text"
+						required
+						name="length"
+						placeholder="Enter length"
+						value={this.state.length}
+						onChange={this.inputChangeHandler}
 					/>
 					<FormElement
-						title="Artist"
+						title="Album"
 						type="select"
 						required
-						name="artist"
-						options={this.props.artists}
-						value={this.state.artist}
+						name="album"
+						options={this.props.albums}
+						value={this.state.album}
 						onChange={this.inputChangeHandler}
 					/>
 
@@ -106,16 +104,16 @@ class NewAlbum extends Component {
 
 const mapStateToProps = state => {
 	return {
-		artists: state.music.artists
+		albums: state.music.albums
 	}
 };
 
 const mapDispatchToProps = dispatch => {
 	return {
-		onSubmit: data => dispatch(createAlbum(data)),
-		onFetchArtists: () => dispatch(fetchArtists())
+		onSubmit: data => dispatch(createTrack(data)),
+		onFetchAlbums: () => dispatch(fetchAlbums())
 	};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewAlbum);
+export default connect(mapStateToProps, mapDispatchToProps)(NewTrack);
 

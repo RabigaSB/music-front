@@ -5,7 +5,7 @@ import {fetchArtists} from "../../store/actions/action-music";
 import Thumbnail from "../../components/Thumbnail/Thumbnail";
 
 
-class Music extends Component {
+class Artist extends Component {
 	componentDidMount() {
 		this.props.onFetchArtists();
 	}
@@ -44,5 +44,5 @@ const mapDispatchToProps = dispatch => {
 	};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Music);
+export default connect(mapStateToProps, mapDispatchToProps)(Artist);
 
