@@ -9,6 +9,7 @@ import Login from './containers/Login/Login';
 import Register from './containers/Register/Register';
 import TrackHistory from './containers/TrackHistory/TrackHistory';
 import {logoutUser} from "./store/actions/action-user";
+import NewAlbum from "./containers/Albums/NewAlbum";
 
 
 
@@ -29,6 +30,9 @@ class App extends Component {
                             <Route exact path="/register" component={Register}/>
                             <Route exact path="/login" component={Login}/>
                             <Route exact path="/track_history" component={TrackHistory}/>
+                            <Route exact path="/new_artist" component={TrackHistory}/>
+                            <Route exact path="/new_album" component={NewAlbum}/>
+                            <Route exact path="/new_track" component={TrackHistory}/>
                         </Switch>
                     </div>
                 </main>

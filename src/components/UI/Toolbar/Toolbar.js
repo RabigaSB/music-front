@@ -25,6 +25,15 @@ const Toolbar = ({user, logout}) => {
 							<NavItem>
 								<NavLink tag={RouterNavLink} to="/track_history" exact>TrackHistory</NavLink>
 							</NavItem>
+							<NavItem>
+								<NavLink tag={RouterNavLink} to="/new_artist" exact>Add Artist</NavLink>
+							</NavItem>
+							<NavItem>
+								<NavLink tag={RouterNavLink} to="/new_album" exact>Add Album</NavLink>
+							</NavItem>
+							<NavItem>
+								<NavLink tag={RouterNavLink} to="/new_track" exact>Add Track</NavLink>
+							</NavItem>
 							<UncontrolledDropdown nav inNavbar>
 								<DropdownToggle nav caret>
 									Hello, {user.username}!
