@@ -16,8 +16,8 @@ const FormElement = props => {
 
 	return (
 		<FormGroup row>
-			<Label for='username'>{props.title}</Label>
-			<Col sm={10}>
+			<Label for='username' className='col-sm-4'>{props.title}</Label>
+			<Col sm={8}>
 				<Input
 					type={props.type}
 					name={props.name}

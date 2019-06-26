@@ -43,7 +43,7 @@ class NewAlbum extends Component {
 	render() {
 		return (
 			<Fragment>
-				<h2>Add new artist</h2>
+				<h2 className='mt-5 mb-4'>Add new artist</h2>
 				<Form onSubmit={this.submitFormHandler}>
 					<FormElement
 						title="Name"
@@ -54,14 +54,16 @@ class NewAlbum extends Component {
 						value={this.state.name}
 						onChange={this.inputChangeHandler}
 					/>
-					<FormElement
-						title="Published"
-						type="checkbox"
-						required
-						name="published"
-						checked={this.state.published}
-						onChange={this.inputChangeCheckboxHandler}
-					/>
+					{ this.props.user
+						<FormElement
+							title="Published"
+							type="checkbox"
+							required
+							name="published"
+							checked={this.state.published}
+							onChange={this.inputChangeCheckboxHandler}
+						/>
+					}
 					<FormElement
 						title="Image"
 						type="file"
@@ -89,6 +91,11 @@ class NewAlbum extends Component {
 	}
 }
 
+const mapStateToProps = state => {
+	return {
+		user: state.users.user
+	}
+};
 
 const mapDispatchToProps = dispatch => {
 	return {

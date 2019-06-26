@@ -45,7 +45,7 @@ class NewTrack extends Component {
 	render() {
 		return (
 			<Fragment>
-				<h2>Add new track</h2>
+				<h2 className='mt-5 mb-4'>Add new track</h2>
 				<Form onSubmit={this.submitFormHandler}>
 					<FormElement
 						title="Name"
