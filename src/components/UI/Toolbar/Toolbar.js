@@ -36,7 +36,7 @@ const Toolbar = ({user, logout}) => {
 							</NavItem>
 							<UncontrolledDropdown nav inNavbar>
 								<DropdownToggle nav caret>
-									Hello, {user.username}!
+									Hello, {user.displayName || user.username}!
 								</DropdownToggle>
 								<DropdownMenu right>
 									<DropdownItem>
