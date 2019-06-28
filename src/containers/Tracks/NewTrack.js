@@ -66,14 +66,18 @@ class NewTrack extends Component {
 						value={this.state.year}
 						onChange={this.inputChangeHandler}
 					/>
-					<FormElement
-						title="Published"
-						type="checkbox"
-						required
-						name="published"
-						checked={this.state.published}
-						onChange={this.inputChangeCheckboxHandler}
-					/>
+					{this.props.user?
+						(this.props.user.role === 'admin'?
+							<FormElement
+								title="Published"
+								type="checkbox"
+								required
+								name="published"
+								checked={this.state.published}
+								onChange={this.inputChangeCheckboxHandler}
+							/>: null
+						): null
+					}
 					<FormElement
 						title="Length"
 						type="text"
@@ -104,7 +108,8 @@ class NewTrack extends Component {
 
 const mapStateToProps = state => {
 	return {
-		albums: state.music.albums
+		albums: state.music.albums,
+		user: state.users.user
 	}
 };
 

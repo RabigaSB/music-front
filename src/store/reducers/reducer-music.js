@@ -1,4 +1,12 @@
-import {FETCH_ARTISTS_SUCCESS, FETCH_ALBUMS_SUCCESS, FETCH_TRACKS_SUCCESS,FETCH_TRACK_HISTORY_SUCCESS} from '../actions/actionTypes';
+import {
+	FETCH_ARTISTS_SUCCESS,
+	FETCH_ALBUMS_SUCCESS,
+	FETCH_TRACKS_SUCCESS,
+	FETCH_TRACK_HISTORY_SUCCESS,
+	FETCH_ARTIST_BY_ID_SUCCESS,
+	FETCH_ALBUM_BY_ID_SUCCESS,
+	FETCH_TRACK_BY_ID_SUCCESS
+} from '../actions/actionTypes';
 
 const initialState = {
 	artists: [],
@@ -17,6 +25,12 @@ const reducer = (state = initialState, action) => {
 			return {...state, tracks: action.tracks};
 		case FETCH_TRACK_HISTORY_SUCCESS:
 			return {...state, trackHistory: action.trackHistory};
+		case FETCH_ARTIST_BY_ID_SUCCESS:
+			return {...state, artist: action.artist};
+		case FETCH_ALBUM_BY_ID_SUCCESS:
+			return {...state, album: action.album};
+		case FETCH_TRACK_BY_ID_SUCCESS:
+			return {...state, track: action.track};
 		default:
 			return state;
 

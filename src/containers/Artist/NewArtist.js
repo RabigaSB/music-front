@@ -1,17 +1,35 @@
 import React, {Component, Fragment} from 'react';
 
 import {connect} from "react-redux";
-import { createArtist } from "../../store/actions/action-music";
+import { createArtist, fetchArtistById } from "../../store/actions/action-music";
 import {Button, Form} from 'reactstrap';
 import FormElement from '../../components/UI/Form/FormElement';
 
 
-class NewAlbum extends Component {
+class NewArtist extends Component {
 	state = {
 		name: '',
 		published: false,
 		information: '',
 	};
+
+	componentDidMount() {
+		console.log(this.props);
+		if (this.props.edit) {
+			this.props.getAtrist(this.props.match.params.artistId)
+				.then(data => {
+					console.log(data);
+					this.setState({
+						name: data.artist.name,
+						published: data.artist.published,
+						information: data.artist.information,
+						// image: data.artist.image,
+					})
+
+				});
+		}
+
+	}
 
 	submitFormHandler = event => {
 		event.preventDefault();
@@ -41,6 +59,7 @@ class NewAlbum extends Component {
 	};
 
 	render() {
+		// console.log(this.props.artist);
 		return (
 			<Fragment>
 				<h2 className='mt-5 mb-4'>Add new artist</h2>
@@ -54,15 +73,17 @@ class NewAlbum extends Component {
 						value={this.state.name}
 						onChange={this.inputChangeHandler}
 					/>
-					{ this.props.user
-						<FormElement
-							title="Published"
-							type="checkbox"
-							required
-							name="published"
-							checked={this.state.published}
-							onChange={this.inputChangeCheckboxHandler}
-						/>
+					{this.props.user?
+						(this.props.user.role === 'admin'?
+							<FormElement
+								title="Published"
+								type="checkbox"
+								required
+								name="published"
+								checked={this.state.published}
+								onChange={this.inputChangeCheckboxHandler}
+							/> : null
+						): null
 					}
 					<FormElement
 						title="Image"
@@ -93,15 +114,17 @@ class NewAlbum extends Component {
 
 const mapStateToProps = state => {
 	return {
-		user: state.users.user
+		user: state.users.user,
+		artist: state.music.artist
 	}
 };
 
 const mapDispatchToProps = dispatch => {
 	return {
 		onSubmit: data => dispatch(createArtist(data)),
+		getAtrist: id => dispatch(fetchArtistById(id))
 	};
 };
 
-export default connect(null, mapDispatchToProps)(NewAlbum);
+export default connect(mapStateToProps, mapDispatchToProps)(NewArtist);
 

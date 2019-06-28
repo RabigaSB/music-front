@@ -69,14 +69,18 @@ class NewAlbum extends Component {
 						value={this.state.year}
 						onChange={this.inputChangeHandler}
 					/>
-					<FormElement
-						title="Published"
-						type="checkbox"
-						required
-						name="published"
-						checked={this.state.published}
-						onChange={this.inputChangeCheckboxHandler}
-					/>
+					{this.props.user?
+						(this.props.user.role === 'admin'?
+							<FormElement
+								title="Published"
+								type="checkbox"
+								required
+								name="published"
+								checked={this.state.published}
+								onChange={this.inputChangeCheckboxHandler}
+							/>: null
+						): null
+					}
 					<FormElement
 						title="Image"
 						type="file"
@@ -106,7 +110,8 @@ class NewAlbum extends Component {
 
 const mapStateToProps = state => {
 	return {
-		artists: state.music.artists
+		artists: state.music.artists,
+		user: state.users.user
 	}
 };
 

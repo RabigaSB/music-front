@@ -17,10 +17,13 @@ class Artist extends Component {
 				{
 					this.props.artists.length>0?
 					this.props.artists.map(artist => (
-						<Link to={"/albums/" + artist._id} key={artist._id} className="d-flex mb-3 border rounded p-4">
-							<Thumbnail image={artist.image}/>
-							<div className="p-3 ">{artist.name}</div>
-						</Link>
+						<div className='position-relative' key={artist._id}>
+							<Link to={'edit_artist/' + artist._id} className='btn--edit'><i className="fas fa-edit"></i></Link>
+							<Link to={"/albums/" + artist._id} className="d-flex mb-3 border rounded p-4">
+								<Thumbnail image={artist.image}/>
+								<div className="p-3 ">{artist.name}</div>
+							</Link>
+						</div>
 						)
 					)
 					:

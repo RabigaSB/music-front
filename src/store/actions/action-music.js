@@ -1,4 +1,12 @@
-import {FETCH_ARTISTS_SUCCESS, FETCH_ALBUMS_SUCCESS, FETCH_TRACKS_SUCCESS,FETCH_TRACK_HISTORY_SUCCESS} from './actionTypes';
+import {
+	FETCH_ARTISTS_SUCCESS,
+	FETCH_ALBUMS_SUCCESS,
+	FETCH_TRACKS_SUCCESS,
+	FETCH_TRACK_HISTORY_SUCCESS,
+	FETCH_ARTIST_BY_ID_SUCCESS,
+	FETCH_ALBUM_BY_ID_SUCCESS,
+	FETCH_TRACK_BY_ID_SUCCESS
+} from './actionTypes';
 import axios from '../../axios-api';
 import {push} from 'connected-react-router';
 
@@ -20,7 +28,6 @@ const getAdminRoute = getState => {
 			adminRoute = '/admin';
 		}
 	}
-
 	return adminRoute;
 };
 
@@ -152,6 +159,22 @@ export const createTrack = data => {
 		
 		return axios.post(url, data, {headers})
 				.then(response => dispatch(push('/')));
+	};
+};
+
+const fetchArtistByIdSuccess = artist => {
+	return {type: FETCH_ARTIST_BY_ID_SUCCESS, artist};
+};
+
+export const fetchArtistById = artistId => {
+	return (dispatch, getState) => {
+
+		const url = '/artists/'+ artistId + getAdminRoute(getState);
+		const headers = getAuthHeader(getState);
+
+		return axios.get(url, {headers}).then(
+			response => dispatch(fetchArtistByIdSuccess(response.data[0]))
+		)
 	};
 };
 
