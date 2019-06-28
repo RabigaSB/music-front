@@ -70,6 +70,7 @@ export const facebookLogin = data => {
 		axios.post('/users/facebookLogin', data).then(
 			response => {
 				dispatch(loginUserSuccess(response.data.user));
+				console.log(response.data.user);
 				dispatch(push('/'));
 			},
 			error => {

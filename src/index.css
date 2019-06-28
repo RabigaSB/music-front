@@ -18,3 +18,8 @@ code {
   background: transparent;
   border: none;
 }
+.avatar {
+  display: inline-block;
+  margin: 0 10px;
+  border-radius: 50%;
+}
