@@ -123,6 +123,9 @@ export const createTrackHistory = data => {
 };
 
 
+
+
+
 export const createArtist = data => {
 	
 	return (dispatch, getState) => {
@@ -175,6 +178,67 @@ export const fetchArtistById = artistId => {
 		return axios.get(url, {headers}).then(
 			response => dispatch(fetchArtistByIdSuccess(response.data[0]))
 		)
+	};
+};
+
+const fetchAlbumByIdSuccess = album => {
+	return {type: FETCH_ALBUM_BY_ID_SUCCESS, album};
+};
+
+export const fetchAlbumById = id => {
+	return (dispatch, getState) => {
+
+		const url = '/albums/'+ id + getAdminRoute(getState);
+		const headers = getAuthHeader(getState);
+
+		return axios.get(url, {headers}).then(
+			response => dispatch(fetchAlbumByIdSuccess(response.data[0]))
+		)
+	};
+};
+
+const fetchTrackByIdSuccess = track => {
+	return {type: FETCH_TRACK_BY_ID_SUCCESS, track};
+};
+
+export const fetchTrackById = id => {
+	return (dispatch, getState) => {
+
+		const url = '/tracks/'+ id + getAdminRoute(getState);
+		const headers = getAuthHeader(getState);
+
+		return axios.get(url, {headers}).then(
+			response => dispatch(fetchTrackByIdSuccess(response.data[0]))
+		)
+	};
+};
+
+
+
+export const editArtist = (data, id) => {
+	return (dispatch, getState) => {
+		const url = '/artists/'+ id + '/publish';
+		const headers = getAuthHeader(getState);
+
+		return axios.patch(url, data, {headers});
+	};
+};
+
+export const editAlbum = (data, id) => {
+	return (dispatch, getState) => {
+		const url = '/albums/'+ id + '/publish';
+		const headers = getAuthHeader(getState);
+
+		return axios.patch(url, data, {headers});
+	};
+};
+
+export const editTrack = (data, id) => {
+	return (dispatch, getState) => {
+		const url = '/track/'+ id + '/publish';
+		const headers = getAuthHeader(getState);
+
+		return axios.patch(url, data, {headers});
 	};
 };
 

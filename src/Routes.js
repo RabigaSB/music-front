@@ -35,16 +35,16 @@ const Routes = ({user}) => (
 		render={props => <NewArtist {...props} edit/>}
 	/>
 	<ProtectedRoute
-		path="/edit_album"
+		path="/edit_album/:id"
 		exact
 		isAllowed={user && user.role === 'admin'}
-		render={() => <NewAlbum edit/>}
+		render={props => <NewAlbum {...props} edit/>}
 	/>
 	<ProtectedRoute
-		path="/edit_track"
+		path="/edit_track/:id"
 		exact
 		isAllowed={user && user.role === 'admin'}
-		render={() => <NewTrack edit/>}
+		render={props => <NewTrack {...props} edit/>}
 	/>
 </Switch>
 );

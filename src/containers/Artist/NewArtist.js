@@ -1,9 +1,10 @@
 import React, {Component, Fragment} from 'react';
 
 import {connect} from "react-redux";
-import { createArtist, fetchArtistById } from "../../store/actions/action-music";
+import { createArtist, fetchArtistById, editArtist } from "../../store/actions/action-music";
 import {Button, Form} from 'reactstrap';
 import FormElement from '../../components/UI/Form/FormElement';
+import config from '../../config';
 
 
 class NewArtist extends Component {
@@ -18,12 +19,8 @@ class NewArtist extends Component {
 		if (this.props.edit) {
 			this.props.getAtrist(this.props.match.params.artistId)
 				.then(data => {
-					console.log(data);
 					this.setState({
-						name: data.artist.name,
 						published: data.artist.published,
-						information: data.artist.information,
-						// image: data.artist.image,
 					})
 
 				});
@@ -33,13 +30,20 @@ class NewArtist extends Component {
 
 	submitFormHandler = event => {
 		event.preventDefault();
-
-		const formData = new FormData();
-
-		for (let key in this.state) {
-			formData.append(key, this.state[key]);
+		if(this.props.edit) {
+			this.props.editArtist(
+				{published: this.state.published},
+				this.props.match.params.artistId
+			);
+		} else {
+			const formData = new FormData();
+			for (let key in this.state) {
+				formData.append(key, this.state[key]);
+			}
+			this.props.onSubmit(formData);
 		}
-		this.props.onSubmit(formData);
+
+
 	};
 
 	inputChangeHandler = event => {
@@ -59,20 +63,50 @@ class NewArtist extends Component {
 	};
 
 	render() {
-		// console.log(this.props.artist);
+		console.log(this.props.artist);
 		return (
 			<Fragment>
-				<h2 className='mt-5 mb-4'>Add new artist</h2>
+				<h2 className='mt-5 mb-4'>{!this.props.edit? 'Add new': 'Edit'} artist</h2>
+				{this.props.edit && this.props.artist?
+					<div>
+						<img width={60} height={60} src={config.apiURL + '/uploads/' + this.props.artist.image} alt="artist"/>
+						<p><b>{this.props.artist.name}</b></p>
+						<p>information: <b>{this.props.artist.information}</b></p>
+					</div>
+					: null
+				}
 				<Form onSubmit={this.submitFormHandler}>
-					<FormElement
-						title="Name"
-						type="text"
-						required
-						name="name"
-						placeholder="Enter name"
-						value={this.state.name}
-						onChange={this.inputChangeHandler}
-					/>
+					{!this.props.edit?
+						<Fragment>
+							<FormElement
+								title="Name"
+								type="text"
+								required
+								name="name"
+								placeholder="Enter name"
+								value={this.state.name}
+								onChange={this.inputChangeHandler}
+							/>
+							<FormElement
+								title="Image"
+								type="file"
+								name="image"
+								placeholder="Enter image"
+								value={this.state.image}
+								onChange={this.fileChangeHandler}
+							/>
+							<FormElement
+								title="Information"
+								type="text"
+								required
+								name="information"
+								placeholder="Enter information"
+								value={this.state.information}
+								onChange={this.inputChangeHandler}
+							/>
+						</Fragment>
+						: null
+					}
 					{this.props.user?
 						(this.props.user.role === 'admin'?
 							<FormElement
@@ -85,24 +119,6 @@ class NewArtist extends Component {
 							/> : null
 						): null
 					}
-					<FormElement
-						title="Image"
-						type="file"
-						name="image"
-						placeholder="Enter image"
-						value={this.state.image}
-						onChange={this.fileChangeHandler}
-					/>
-					<FormElement
-						title="Information"
-						type="text"
-						required
-						name="information"
-						placeholder="Enter information"
-						value={this.state.information}
-						onChange={this.inputChangeHandler}
-					/>
-
 
 					<Button type="submit" color="primary" >Save</Button>
 
@@ -122,7 +138,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
 	return {
 		onSubmit: data => dispatch(createArtist(data)),
-		getAtrist: id => dispatch(fetchArtistById(id))
+		getAtrist: id => dispatch(fetchArtistById(id)),
+		editArtist: (data, id) => dispatch(editArtist(data, id))
 	};
 };
 
