@@ -25,10 +25,10 @@ class Albums extends Component {
 			<Fragment>
 				<h2>{this.state.artist}'s albums</h2>
 				{
-					this.props.albums.length >0?
+					this.props.albums.length > 0?
 						this.props.albums.map(album => (
 							<div className='position-relative' key={album._id}>
-								<Link to={'edit_album/' + album._id} className='btn--edit'><i className="fas fa-edit"></i></Link>
+								<Link to={'/edit_album/' + album._id} className='btn--edit'><i className="fas fa-edit"></i></Link>
 								<Link to={"/tracks/" + album._id} className="d-flex mb-3 border rounded p-4 align-items-center">
 									<Thumbnail image={album.image}/>
 									<div className="p-3">{album.name}</div>

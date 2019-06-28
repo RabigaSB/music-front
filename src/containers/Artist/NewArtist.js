@@ -15,17 +15,14 @@ class NewArtist extends Component {
 	};
 
 	componentDidMount() {
-		console.log(this.props);
 		if (this.props.edit) {
 			this.props.getAtrist(this.props.match.params.artistId)
 				.then(data => {
 					this.setState({
 						published: data.artist.published,
 					})
-
 				});
 		}
-
 	}
 
 	submitFormHandler = event => {
@@ -63,7 +60,7 @@ class NewArtist extends Component {
 	};
 
 	render() {
-		console.log(this.props.artist);
+		// console.log(this.props.artist);
 		return (
 			<Fragment>
 				<h2 className='mt-5 mb-4'>{!this.props.edit? 'Add new': 'Edit'} artist</h2>
